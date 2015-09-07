@@ -6,13 +6,17 @@
 import Quandl
 import pandas
 
+# User Made Modules
+import global_vars
+
 # Global Variables
 curr_series = ['FRED/DEXCAUS', 'FRED/DEXUSEU', 'FRED/DEXUSUK', 
 			   'FRED/DEXJPUS']
 
 reverse_series = ['FRED/DEXCAUS', 'FRED/DEJPUS']
 
-outfile = 'currency_data.csv'
+API_KEY = global_vars.API_KEY
+outfile = global_vars.outfile
 
 def main():
 
