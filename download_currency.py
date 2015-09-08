@@ -1,12 +1,22 @@
 '''
+By : Real Limoges
 
+This script uses Quandl's free FRED library to download currency
+data for major currencies to USD. In cases where the data is only
+available in USD to FX, it is inverted.
 
 '''
 # Standard Modules
-import Quandl
-import pandas
-import pickle
-import sys
+
+try:
+	import Quandl
+	import pandas
+	import pickle
+	import sys
+except:
+	from setuptools.command import easy_install
+	for req in REQUIREMENTS:
+		easy_install.main( [req] )
 
 # User Made Modules
 import global_vars
