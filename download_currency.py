@@ -5,27 +5,31 @@
 # Standard Modules
 import Quandl
 import pandas
+import pickle
+import sys
 
 # User Made Modules
 import global_vars
 
-# Global Variables
-curr_series = ['FRED/DEXCAUS', 'FRED/DEXUSEU', 'FRED/DEXUSUK', 
-			   'FRED/DEXJPUS']
-
-reverse_series = ['FRED/DEXCAUS', 'FRED/DEJPUS']
-
-API_KEY = global_vars.API_KEY
-outfile = global_vars.outfile
 
 def main():
+	curr_series = ['FRED/DEXCAUS', 'FRED/DEXUSEU', 'FRED/DEXUSUK', 
+				   'FRED/DEXJPUS']
+	
+	reverse_series = ['FRED/DEXCAUS', 'FRED/DEJPUS']
+
 
 	try:
-		df = Quandl.get(curr_series)
-		print df
-		df.to_csv(outfile, index = True)
+		df = Quandl.get(curr_series, authtoken = global_vars.API_KEY)
+		reverse_series = [ x.replace('/', '.') for x in reverse_series ]
+		reverse_series = [ x + ' - Value' for x in reverse_series ]
+		
+		try:
+			df.to_csv(global_vars.outfile, index = True)
+		except:
+			pickle.dump(df, global_vars.emergency_dump)
 	except:
-		raise Exception
+		print "Unexpected error:", sys.exc_info()
 
 if __name__ == '__main__':
 	main()
